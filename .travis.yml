@@ -18,7 +18,7 @@ after_success:
 # log in to the docker cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # take those images and push them to docker hub
-  - docker push toyo-tomi/multi-client
-  - docker push toyo-tomi/multi-nginx
-  - docker push toyo-tomi/multi-server
-  - docker push toyo-tomi/multi-worker
+  - docker push sacquer/multi-client
+  - docker push sacquer/multi-nginx
+  - docker push sacquer/multi-server
+  - docker push sacquer/multi-worker
