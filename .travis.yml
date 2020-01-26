@@ -1,0 +1,24 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t toyo-tomi/react -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true toyo-tomi/react npm run test -- --coverage
+
+# configuration for how to build production versions of all of our projects and push them to Docker Hub
+after_success:
+  - docker build -t toyo-tomi/multi-client ./client
+  - docker build -t toyo-tomi/multi-nginx ./nginx
+  - docker build -t toyo-tomi/multi-server ./server
+  - docker build -t toyo-tomi/multi-worker ./worker
+# log in to the docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# take those images and push them to docker hub
+  - docker push toyo-tomi/multi-client
+  - docker push toyo-tomi/multi-nginx
+  - docker push toyo-tomi/multi-server
+  - docker push toyo-tomi/multi-worker
