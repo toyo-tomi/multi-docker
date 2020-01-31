@@ -22,3 +22,17 @@ after_success:
   - docker push sacquer/multi-nginx
   - docker push sacquer/multi-server
   - docker push sacquer/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-north-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-1-023793650799
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: 
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
