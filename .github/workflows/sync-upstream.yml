@@ -1,0 +1,18 @@
+on:
+  pull_request:
+    # Only trigger when the pull request is closed and merged
+    types: [closed]
+    branches: [main]
+
+jobs:
+  test_action_job:
+    runs-on: ubuntu-latest
+    name: Job to test the action
+    steps:
+      - name: Action Test
+        uses: PiJaAB/mirror-repo@v1.1.1
+        id: action_test
+        with:
+          PRIVATE_SSH_KEY: ${{secrets.PRIVATE_SSH_KEY}}
+          REMOTE_REPOSITORY: "TakedoInc/isr-example-sync-fork"
+          REMOTE_BRANCH: "live-fork"
